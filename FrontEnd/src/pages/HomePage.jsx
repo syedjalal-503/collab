@@ -24,6 +24,7 @@ const HomePage = () => {
       <section className="home-hero">
         <div className="home-hero__content">
           <p className="home-hero__tagline">
+            
             <i className="fa-regular fa-circle-check" aria-hidden="true"></i>
             AI-Powered Resume Analysis
           </p>
