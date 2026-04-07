@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
   const navigate = useNavigate();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const profileMenuRef = useRef(null);
 
   const userName = localStorage.getItem("userName") || "User";
@@ -34,7 +35,7 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-gray-200 bg-white/95 backdrop-blur">
-      <nav className="mx-auto flex w-full max-w-7xl items-center justify-around gap-4 px-4 py-3 sm:px-6 lg:px-8">
+      <nav className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
         <button
           type="button"
           onClick={() => navigate("/")}
@@ -43,10 +44,30 @@ const Header = () => {
           ResumeLens
         </button>
 
-        <div className="flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+        <button
+          type="button"
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-700 transition hover:border-gray-500 hover:bg-gray-50 lg:hidden"
+          aria-label="Toggle menu"
+        >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            {isMobileMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+
+        <div className={`w-full flex-col gap-2 sm:gap-3 lg:flex lg:w-auto lg:flex-row lg:items-center lg:justify-end ${
+            isMobileMenuOpen ? "flex" : "hidden lg:flex"
+          }`}>
           <button
             type="button"
-            onClick={() => navigate("/home")}
+            onClick={() => {
+              navigate("/home");
+              setIsMobileMenuOpen(false);
+            }}
             className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-500 hover:text-gray-900"
           >
             Home
@@ -54,7 +75,10 @@ const Header = () => {
 
           <button
             type="button"
-            onClick={() => navigate("/analysis")}
+            onClick={() => {
+              navigate("/analysis");
+              setIsMobileMenuOpen(false);
+            }}
             className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-gray-500 hover:text-gray-900"
           >
             Analysis
@@ -62,7 +86,10 @@ const Header = () => {
 
           <button
             type="button"
-            onClick={() => navigate("/resume")}
+            onClick={() => {
+              navigate("/resume");
+              setIsMobileMenuOpen(false);
+            }}
             className="rounded-full bg-gray-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-gray-700"
           >
             Create Resume
@@ -70,20 +97,21 @@ const Header = () => {
 
           <div
             ref={profileMenuRef}
-            onClick={() => setIsProfileMenuOpen((true ))}
-            className="relative ml-1 cursor-pointer"
+            onClick={() => setIsProfileMenuOpen(true)}
+            className="relative w-full mt-2 cursor-pointer lg:w-auto lg:mt-0 lg:ml-2 hidden lg:block"
             onMouseEnter={() => setIsProfileMenuOpen(true)}
-            // onMouseLeave={() => setIsProfileMenuOpen(false)}
           >
-            <button
-              type="button"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-sm"
-              aria-label="User profile"
-              title={userName}
-              onClick={() => setIsProfileMenuOpen((prev) => !prev)}
-            >
-              {profileInitial}
-            </button>
+            <div className="flex w-full justify-end lg:w-auto">
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white shadow-sm"
+                aria-label="User profile"
+                title={userName}
+                onClick={() => setIsProfileMenuOpen((prev) => !prev)}
+              >
+                {profileInitial}
+              </button>
+            </div>
 
             {isProfileMenuOpen && (
               <div className="absolute right-0 z-50 mt-2 w-40 rounded-lg border border-gray-200 bg-white p-2 shadow-lg">
