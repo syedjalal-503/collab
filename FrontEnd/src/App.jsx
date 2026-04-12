@@ -10,6 +10,7 @@ import Resume from "./pages/Resume";
 import ViewResume from "./pages/ViewResume";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Error from "./pages/Error";
 import TermsCondition from "./pages/TermsCondition";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path="/resume" element={<Resume />} />
           <Route path="/view-resume" element={<ViewResume />} />
           <Route path="/terms" element={<TermsCondition />} />
+          <Route path="*" element={< Error/>} />
         </Routes>
       </main>
 
